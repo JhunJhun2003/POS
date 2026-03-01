@@ -23,3 +23,7 @@ require __DIR__.'/auth.php';
 Route::get('/signup-test',function(){
     return view('Login.signup');
 });
+
+Route::get('/item',function(){
+    return view('Item.index');
+});
