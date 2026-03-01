@@ -1,0 +1,215 @@
+:root {
+    --bg-cream: #f7f3e8;
+    --card-bg: #e0e0e0;
+    --primary-blue: #3b82f6;
+    --hover-blue: #2563eb;
+    --text-black: #000000;
+    --text-grey: #666666;
+    --table-header-bg: #4a90e2;
+    --border-pink: #ff00ff;
+    /* Border as shown in the mockup image */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    background-color: white;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Header Styles */
+.main-header {
+    background-color: var(--bg-cream);
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #e5e0d4;
+    position: relative;
+}
+
+.breadcrumb {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-grey);
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.btn-main-menu {
+    background-color: var(--primary-blue);
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-main-menu:hover {
+    background-color: var(--hover-blue);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Filters Section */
+.filters-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 30px;
+    background-color: #fcfcfc;
+}
+
+.card {
+    background-color: var(--card-bg);
+    padding: 25px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-group label {
+    flex: 1;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.form-group input {
+    flex: 2;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    font-size: 0.9rem;
+}
+
+.btn-search,
+.btn-all-items {
+    background-color: var(--primary-blue);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    align-self: center;
+    margin-top: 10px;
+    transition: all 0.2s ease;
+}
+
+.btn-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.btn-search:hover,
+.btn-all-items:hover {
+    background-color: var(--hover-blue);
+    transform: scale(1.02);
+}
+
+/* Table Section */
+.report-table-section {
+    padding: 0 30px 30px 30px;
+}
+
+.table-container {
+    border: 2px solid var(--border-pink);
+    border-radius: 4px;
+    min-height: 400px;
+    background-color: #f5f5f5;
+    overflow-x: auto;
+    /* Fix for narrow screens */
+    margin-top: 10px;
+}
+
+.report-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+    /* Ensure table doesn't get too squashed */
+}
+
+.report-table thead tr {
+    background-color: var(--table-header-bg);
+    color: white;
+}
+
+.report-table th {
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-bottom: 2px solid #357abd;
+}
+
+.export-header {
+    text-align: right !important;
+}
+
+.btn-export {
+    background-color: #f0f0f0;
+    color: black;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-export:hover {
+    background-color: #e0e0e0;
+}
+
+.empty-row td {
+    height: 350px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .filters-section {
+        grid-template-columns: 1fr;
+    }
+
+    .title {
+        font-size: 1.8rem;
+    }
+}

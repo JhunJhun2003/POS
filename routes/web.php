@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
 Route::get('/dashboard', function () {
@@ -30,4 +30,8 @@ Route::get('/item',function(){
 
 Route::get('/user/userMenu',function(){
     return view('user.userMenu');
+});
+
+Route::get('/report',function(){
+    return view('report.index');
 });
