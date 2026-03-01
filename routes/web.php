@@ -23,3 +23,11 @@ require __DIR__.'/auth.php';
 Route::get('/login_test',function(){
     return view('Login.login');
 });
+
+Route::get('/item',function(){
+    return view('Item.index');
+});
+
+Route::get('/user/userMenu',function(){
+    return view('user.userMenu');
+});
