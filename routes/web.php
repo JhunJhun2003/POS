@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,19 +18,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
-
-Route::get('/login_test', function () {
-    return view('Login.login');
-});
-
 Route::middleware('admin')->group(function () {
-    Route::get('/item', function () {
-        return view('Item.index');
-    });
-
-    Route::get('/user/userMenu', function () {
-        return view('user.userMenu');
-    });
+    Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/item', [AdminController::class, 'item'])->name('admin.item');
+    Route::get('/order', [AdminController::class, 'order'])->name('admin.order');
+    Route::get('/report', [AdminController::class, 'report'])->name('admin.report');
+    Route::get('/user/userMenu', [AdminController::class, 'user'])->name('admin.userMenu');
+    // Route::get('/user/userMenu', function () {
+    //     return view('user.userMenu');
+    // });
 });
-    
+
+require __DIR__.'/auth.php';
