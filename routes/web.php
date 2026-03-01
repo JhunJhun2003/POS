@@ -27,3 +27,7 @@ Route::get('/signup-test',function(){
 Route::get('/item',function(){
     return view('Item.index');
 });
+
+Route::get('/user/userMenu',function(){
+    return view('user.userMenu');
+});
