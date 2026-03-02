@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const addRowBtn = document.getElementById('add-row-btn');
 
     const modalOverlay = document.getElementById('modal-overlay');
+    const userModalOverlay = document.getElementById('user-modal-overlay');
     const addRowOverlay = document.getElementById('add-row-overlay');
 
     // Show Registration Modal
@@ -12,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     userBtn.addEventListener('click', () => {
-        modalOverlay.classList.add('active');
+        userModalOverlay.classList.add('active');
     });
 
     // Show Add Row Modal
@@ -24,9 +25,11 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('click', (e) => {
         if (e.target === modalOverlay) {
             modalOverlay.classList.remove('active');
+            userModalOverlay.classList.remove('active');
         }
         if (e.target === addRowOverlay) {
             addRowOverlay.classList.remove('active');
+             userModalOverlay.classList.remove('active');
         }
     });
 });

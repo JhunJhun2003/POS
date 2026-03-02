@@ -49,16 +49,23 @@
                         <th>Role</th>
                         <th>Username</th>
                         <th>Password</th>
-                        <th style="width: 100px;"><button id="add-row-btn" class="btn-add">Add Row</button></th>
+                        <th style="width: 100px;">
+                            <!--<button id="add-row-btn" class="btn-add">Add Row</button>-->
+                            Action
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
+                    @php 
+                        $count = 1;
+                    @endphp
+                    @foreach($users as $user)
                     <tr>
-                        <td class="text-red">1</td>
-                        <td class="text-red">Kyaw Zin</td>
-                        <td class="text-red">Cashier</td>
-                        <td class="text-red">Cashier</td>
-                        <td class="text-red">kyawzin</td>
+                        <td class="text-red">{{$count++}}</td>
+                        <td class="text-red">{{$user->name}}</td>
+                        <td class="text-red">{{$user->usertype}}</td>
+                        <td class="text-red">{{$user->usertype}}</td>
+                        <td class="text-red">{{$user->name}}</td>
                         <td class="text-red">********</td>
                         <td>
                             <div class="action-buttons">
@@ -67,14 +74,16 @@
                             </div>
                         </td>
                     </tr>
+                    @endforeach
                 </tbody>
             </table>
         </section>
     </div>
 
-    <!-- Registration Modal (Admin/Manager/User/Cashier) -->
+    <!-- Registration Modal (Admin/Manager/) -->
     <div id="modal-overlay" class="modal-overlay">
-        <form action="" method="post">
+        <form action="{{ route('admin.addUser') }}" method="post">
+            @csrf 
             <div class="modal-content">
                 <div class="form-group">
                     <label>Username</label>
@@ -90,7 +99,7 @@
                 </div>
                 <div class="form-group">
                     <label>Confirm Password</label>
-                    <input type="password" name="confim_password" placeholder="">
+                    <input type="password" name="confirm_password" placeholder="">
                 </div>
                 <div class="form-group">
                     <label>Role</label>
@@ -98,6 +107,42 @@
                         <option value="" disabled selected>&lt;Dropdown Box&gt;</option>
                         <option value="admin">Admin</option>
                         <option value="manager">Manager</option>
+                        <!--<option value="user">User</option>-->
+                    </select>
+                </div>
+            
+                <button type="submit" class="btn btn-register">Register</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Registration Modal (User/Cashier) -->
+    <div id="user-modal-overlay" class="modal-overlay">
+        <form action="{{ route('admin.addUser') }}" method="post">
+            @csrf 
+            <div class="modal-content">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" name="name"  placeholder="">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" name="confirm_password" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <select name="usertype">
+                        <option value="" disabled selected>&lt;Dropdown Box&gt;</option>
+                        <!--<option value="admin">Admin</option>
+                        <option value="manager">Manager</option>-->
                         <option value="user">User</option>
                     </select>
                 </div>
@@ -108,7 +153,7 @@
     </div>
 
     <!-- Add Row Modal -->
-    <div id="add-row-overlay" class="modal-overlay">
+    <!--<div id="add-row-overlay" class="modal-overlay">
         <div class="modal-content">
             <div class="form-group">
                 <label>Name</label>
@@ -138,7 +183,7 @@
             </div>
             <button class="btn btn-register">Add</button>
         </div>
-    </div>
+    </div>-->
 
     <script src="{{asset('assets/user/script.js')}}"></script>
 </body>

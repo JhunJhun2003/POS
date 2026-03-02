@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Inventory;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class AdminController extends Controller
 {
@@ -80,6 +81,32 @@ class AdminController extends Controller
         return view('report.index');
     }
 
+    //for add user
+    public function userStore(Request $request){
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
+            'confirm_password' => 'required',
+            'usertype' => 'required',
+
+        ]);
+
+        if($validatedData['password'] === $validatedData['confirm_password']){
+             $user = new User;
+            $user->name = $validatedData['name'];
+            $user->email = $validatedData['email'];
+            $user->password = $validatedData['password'];
+            $user->usertype = $validatedData['usertype'];
+
+            $user->save();
+            return redirect()->back()->with('success','user added successfull');
+        }else{
+            return redirect()->back()->with('error','Error');
+        }
+       
+
+    }
     public function userMenu()
     {
         return view('user.userMenu');
@@ -87,6 +114,7 @@ class AdminController extends Controller
 
     public function user()
     {
-        return view('user.index');
+        $users = User::all();
+        return view('user.index', compact('users'));
     }
 }

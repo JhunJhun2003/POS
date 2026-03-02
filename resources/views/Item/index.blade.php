@@ -40,7 +40,7 @@
                     <div class="category-container">
                         
                         <select name="categoryid" id="categorySelect" class="btn-category">
-                            
+                             
                             {{-- <option value="">Category</option> --}}
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
