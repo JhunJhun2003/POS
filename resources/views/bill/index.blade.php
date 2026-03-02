@@ -40,7 +40,7 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label>Items : <input type="text" id="item_name" class="form-input"></label>
+                            <label>Items Code : <input type="text" id="item_name" class="form-input"></label>
                         </div>
                         <div class="form-group">
                             <label for="quantity">Quantity :</label>
@@ -49,7 +49,7 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="price">Price :</label>
+                            <label for="price">Per Price :</label>
                             <input type="text" id="price" class="form-input">
                         </div>
                         <div class="form-group">
