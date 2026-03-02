@@ -18,7 +18,7 @@
             <div class="nav-btn">Bill</div>
             <h1>ABK MINI MART</h1>
             <div class="nav-right">
-                <button class="btn btn-main-menu">Main Menu</button>
+                <button class="btn btn-main-menu" onclick="window.location.href='{{ route('admin.index') }}'">Main Menu</button>
             </div>
         </header>
 

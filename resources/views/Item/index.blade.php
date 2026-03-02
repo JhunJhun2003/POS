@@ -22,7 +22,7 @@
                 <h1>ABK MINI MART</h1>
             </div>
             <div class="header-right">
-                <button class="btn btn-primary">Main Menu</button>
+               <button class="btn btn-main-menu" onclick="window.location.href='{{ route('admin.index') }}'">Main Menu</button>
             </div>
         </header>
 

@@ -25,7 +25,10 @@ class AdminController extends Controller
         return view('report.index');
     }
 
-    public function user(){
+    public function userMenu(){
         return view('user.userMenu');
+    }
+    public function user(){
+        return view('user.index');
     }
 }
