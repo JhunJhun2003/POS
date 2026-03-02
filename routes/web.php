@@ -27,6 +27,12 @@ Route::get('/login_test',function(){
 Route::get('/item',function(){
     return view('Item.index');
 });
+Route::get('/order',function(){
+    return view('Order.index');
+});
+Route::get('/user',function(){
+    return view('User.index');
+});
 
 Route::get('/user/userMenu',function(){
     return view('user.userMenu');
