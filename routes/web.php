@@ -23,7 +23,10 @@ Route::middleware('admin')->group(function () {
     Route::get('/item', [AdminController::class, 'item'])->name('admin.item');
     Route::get('/order', [AdminController::class, 'order'])->name('admin.order');
     Route::get('/report', [AdminController::class, 'report'])->name('admin.report');
-    Route::get('/user/userMenu', [AdminController::class, 'user'])->name('admin.userMenu');
+
+    Route::get('/user', [AdminController::class, 'user'])->name('admin.user');
+    Route::get('/user/userMenu', [AdminController::class, 'userMenu'])->name('admin.userMenu');
+    Route::get('/inventory', [AdminController::class, 'inventory'])->name('admin.inventory');
 });
 
 require __DIR__.'/auth.php';

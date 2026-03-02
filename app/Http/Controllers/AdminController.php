@@ -11,9 +11,12 @@ class AdminController extends Controller
     }
 
     public function item(){
-        return view('Item.index');
+        return view('Item.index'); //for add item
     }
 
+    public function inventory(){
+        return view('inventory.index'); //for inventory
+    }
     public function order(){
         return view('bill.index');
     }
@@ -22,7 +25,10 @@ class AdminController extends Controller
         return view('report.index');
     }
 
-    public function user(){
+    public function userMenu(){
         return view('user.userMenu');
+    }
+    public function user(){
+        return view('user.index');
     }
 }
