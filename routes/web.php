@@ -20,8 +20,8 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/signup-test',function(){
-    return view('Login.signup');
+Route::get('/login_test',function(){
+    return view('Login.login');
 });
 
 Route::get('/item',function(){
