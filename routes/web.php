@@ -26,7 +26,8 @@ Route::middleware('admin')->group(function () {
 
     Route::get('/user', [AdminController::class, 'user'])->name('admin.user');
     Route::get('/user/userMenu', [AdminController::class, 'userMenu'])->name('admin.userMenu');
-    Route::get('/inventory', [AdminController::class, 'inventory'])->name('admin.inventory');
+    // Route::get('/inventory', [AdminController::class, 'inventory'])->name('admin.inventory');
+    Route::post('/inventory', [AdminController::class, 'store'])->name('inventory.store');
 });
 
 require __DIR__.'/auth.php';

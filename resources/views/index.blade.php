@@ -28,7 +28,7 @@
                 <a href="{{ route('admin.item') }}" style="text-decoration: none; color: white;" class="nav-item">Items</a>
                 <a href="{{ route('admin.order') }}" style="text-decoration: none; color: white;" class="nav-item">Bill</a>
                 <a href="{{ route('admin.user') }}" style="text-decoration: none; color: white;" class="nav-item">Account</a>
-                <a href="{{ route('admin.inventory') }}" style="text-decoration: none; color: white;" class="nav-item">Inventory</a>
+                {{-- <a href="{{ route('admin.inventory') }}" style="text-decoration: none; color: white;" class="nav-item">Inventory</a> --}}
                 <a href="{{ route('admin.userMenu') }}" style="text-decoration: none; color: white;" class="nav-item">User Manual</a>
                 <a href="{{ route('admin.report') }}" style="text-decoration: none; color: white;" class="nav-item">Report</a>
                 <button class="nav-item exit">Exit</button>
