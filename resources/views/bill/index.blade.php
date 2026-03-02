@@ -15,7 +15,7 @@
     <div class="container">
         <!-- Header -->
         <header>
-            <div class="nav-btn">Order</div>
+            <div class="nav-btn">Bill</div>
             <h1>ABK MINI MART</h1>
             <div class="nav-right">
                 <button class="btn btn-main-menu">Main Menu</button>
@@ -26,7 +26,7 @@
         <main>
             <!-- Left Side: Order System -->
             <div class="order-system">
-                <div class="card-header">Order System</div>
+                <div class="card-header">Bill System</div>
                 <div class="form-container">
                     <div class="form-row">
                         <div class="form-group">

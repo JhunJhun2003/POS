@@ -26,7 +26,7 @@
             <!-- Sidebar -->
             <nav class="sidebar">
                 <a href="{{ route('admin.item') }}" style="text-decoration: none; color: white;" class="nav-item">Items</a>
-                <a href="{{ route('admin.order') }}" style="text-decoration: none; color: white;" class="nav-item">Order</a>
+                <a href="{{ route('admin.order') }}" style="text-decoration: none; color: white;" class="nav-item">Bill</a>
                 <button class="nav-item">Account</button>
                 <button class="nav-item">Inventory</button>
                 <a href="{{ route('admin.userMenu') }}" style="text-decoration: none; color: white;" class="nav-item">User Manual</a>
