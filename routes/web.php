@@ -35,3 +35,11 @@ Route::get('/user/userMenu',function(){
 Route::get('/report',function(){
     return view('report.index');
 });
+
+Route::get('/order',function(){
+    return view('order.index');
+});
+
+Route::get('/user',function(){
+    return view('user.index');
+});
