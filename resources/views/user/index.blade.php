@@ -74,29 +74,37 @@
 
     <!-- Registration Modal (Admin/Manager/User/Cashier) -->
     <div id="modal-overlay" class="modal-overlay">
-        <div class="modal-content">
-            <div class="form-group">
-                <label>Username</label>
-                <input type="text" placeholder="">
+        <form action="" method="post">
+            <div class="modal-content">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" name="name"  placeholder="">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" name="confim_password" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <select name="usertype">
+                        <option value="" disabled selected>&lt;Dropdown Box&gt;</option>
+                        <option value="admin">Admin</option>
+                        <option value="manager">Manager</option>
+                        <option value="user">User</option>
+                    </select>
+                </div>
+            
+                <button type="submit" class="btn btn-register">Register</button>
             </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" placeholder="">
-            </div>
-            <div class="form-group">
-                <label>Confirm Password</label>
-                <input type="password" placeholder="">
-            </div>
-            <div class="form-group">
-                <label>Role</label>
-                <select>
-                    <option value="" disabled selected>&lt;Dropdown Box&gt;</option>
-                    <option value="admin">Admin</option>
-                    <option value="manager">Manager</option>
-                </select>
-            </div>
-            <button class="btn btn-register">Register</button>
-        </div>
+        </form>
     </div>
 
     <!-- Add Row Modal -->

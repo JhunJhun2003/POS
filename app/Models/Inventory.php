@@ -18,4 +18,9 @@ class Inventory extends Model
         'exp_Date',
         'alert_Date',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'categoryid');
+    }
 }

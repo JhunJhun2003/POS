@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('itemCode')->unique();
             $table->string('itemName');
             $table->decimal('price', 8, 2);
-            $table->unsignedBigInteger('categoryid');
+            $table->unsignedBigInteger('categoryid')->foreign('categoryid')->references('id')->on('category')->onDelete('cascade');
             $table->integer('quantity');
             $table->decimal('cost', 8, 2);
             $table->date('exp_Date');
