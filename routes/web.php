@@ -24,7 +24,10 @@ Route::middleware('admin')->group(function () {
     Route::get('/register', [RegisteredUserController::class, 'create']);
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/item', [AdminController::class, 'item'])->name('admin.item');
-    Route::get('/order', [AdminController::class, 'order'])->name('admin.order');
+    Route::get('/bill', [AdminController::class, 'bill'])->name('admin.bill');
+    // Add these routes to your web.php
+Route::post('/get-item-price', [AdminController::class, 'getItemPrice'])->name('admin.get.item.price');
+Route::post('/save-bill', [AdminController::class, 'saveBill'])->name('admin.save.bill');
     Route::get('/report', [AdminController::class, 'report'])->name('admin.report');
 
     Route::get('/user', [AdminController::class, 'user'])->name('admin.user');
