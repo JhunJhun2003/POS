@@ -15,7 +15,7 @@ class AdminController extends Controller
     }
 
     public function order(){
-        return view('order.index');
+        // return view('order.index');
     }
 
     public function report(){

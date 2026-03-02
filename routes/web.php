@@ -24,9 +24,6 @@ Route::middleware('admin')->group(function () {
     Route::get('/order', [AdminController::class, 'order'])->name('admin.order');
     Route::get('/report', [AdminController::class, 'report'])->name('admin.report');
     Route::get('/user/userMenu', [AdminController::class, 'user'])->name('admin.userMenu');
-    // Route::get('/user/userMenu', function () {
-    //     return view('user.userMenu');
-    // });
 });
 
 require __DIR__.'/auth.php';
