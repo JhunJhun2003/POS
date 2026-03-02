@@ -24,6 +24,7 @@ Route::middleware('admin')->group(function () {
     Route::get('/order', [AdminController::class, 'order'])->name('admin.order');
     Route::get('/report', [AdminController::class, 'report'])->name('admin.report');
     Route::get('/user/userMenu', [AdminController::class, 'user'])->name('admin.userMenu');
+    Route::get('/inventory', [AdminController::class, 'inventory'])->name('admin.inventory');
 });
 
 require __DIR__.'/auth.php';

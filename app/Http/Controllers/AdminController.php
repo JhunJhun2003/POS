@@ -11,9 +11,12 @@ class AdminController extends Controller
     }
 
     public function item(){
-        return view('Item.index');
+        return view('Item.index'); //for add item
     }
 
+    public function inventory(){
+        return view('inventory.index'); //for inventory
+    }
     public function order(){
         return view('bill.index');
     }
