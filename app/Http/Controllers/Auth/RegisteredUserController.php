@@ -19,7 +19,12 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+    //    if (Auth::check() && Auth::user()->isAdmin()) {
+    //         return view('auth.register');
+    //     }
+
+    //     abort(403, 'you are not authorized to access this page.Pleaser login');
+        return view('Login.login');
     }
 
     /**

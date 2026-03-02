@@ -36,17 +36,19 @@
                     class="nav-item">User Manual</a>
                 <a href="{{ route('admin.report') }}" style="text-decoration: none; color: white;"
                     class="nav-item">Report</a>
-                <button class="nav-item exit"> <form method="POST" action="{{ route('logout') }}">
-                    @csrf
+                <button class="nav-item exit">
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
 
-                    <x-dropdown-link :href="route('logout')"
-                        onclick="event.preventDefault();
+                        <x-dropdown-link :href="route('logout')"
+                            onclick="event.preventDefault();
                                                 this.closest('form').submit();"
-                       style="text-decoration: none; color: white;">
-                        {{ __('Log Out') }}
-                    </x-dropdown-link>
-                </form></button>
-               
+                            style="text-decoration: none; color: white;">
+                            {{ __('Log Out') }}
+                        </x-dropdown-link>
+                    </form>
+                </button>
+
             </nav>
 
             <!-- Main Content -->
