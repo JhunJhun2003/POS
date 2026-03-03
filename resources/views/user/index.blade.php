@@ -27,8 +27,8 @@
 
         <section class="top-section">
             <div class="card action-card">
-                <button id="admin-btn" class="btn btn-primary">Admin and Manager</button>
-                <button id="user-btn" class="btn btn-primary">User and Cashier</button>
+                <button id="admin-btn" class="btn btn-primary">Add Manager</button>
+                <button id="user-btn" class="btn btn-primary">Add Cashier</button>
             </div>
             <div class="card terms-card">
                 <h3>Terms and Conditions</h3>
@@ -70,7 +70,11 @@
                         <td>
                             <div class="action-buttons">
                                 <button class="btn-edit">Edit</button>
-                                <button class="btn-delete">Delete</button>
+                                <form action="{{route('admin.deleteUser',$user->id)}}" method="post">
+                                    @csrf 
+                                    @method('DELETE')
+                                    <button type="submit" class="btn-delete" onclick="confirm('Are you sure delete')">Delete</button>
+                                </form>
                             </div>
                         </td>
                     </tr>
@@ -104,8 +108,8 @@
                 <div class="form-group">
                     <label>Role</label>
                     <select name="usertype">
-                        <option value="" disabled selected>&lt;Dropdown Box&gt;</option>
-                        <option value="admin">Admin</option>
+                        <option value="" disabled selected></option>
+                        <!--<option value="admin">Admin</option>-->
                         <option value="manager">Manager</option>
                         <!--<option value="user">User</option>-->
                     </select>
@@ -140,7 +144,7 @@
                 <div class="form-group">
                     <label>Role</label>
                     <select name="usertype">
-                        <option value="" disabled selected>&lt;Dropdown Box&gt;</option>
+                        <option value="" disabled selected>Select</option>
                         <!--<option value="admin">Admin</option>
                         <option value="manager">Manager</option>-->
                         <option value="user">User</option>
@@ -152,38 +156,7 @@
         </form>
     </div>
 
-    <!-- Add Row Modal -->
-    <!--<div id="add-row-overlay" class="modal-overlay">
-        <div class="modal-content">
-            <div class="form-group">
-                <label>Name</label>
-                <input type="text" placeholder="">
-            </div>
-            <div class="form-group">
-                <label>Position</label>
-                <input type="text" placeholder="">
-            </div>
-            <div class="form-group">
-                <label>Username</label>
-                <input type="text" placeholder="">
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" placeholder="">
-            </div>
-            <div class="form-group">
-                <label>Role</label>
-                <select>
-                    <option value="" disabled selected>&lt;Dropdown Box&gt;</option>
-                    <option value="admin">Admin</option>
-                    <option value="manager">Manager</option>
-                    <option value="user">User</option>
-                    <option value="cashier">Cashier</option>
-                </select>
-            </div>
-            <button class="btn btn-register">Add</button>
-        </div>
-    </div>-->
+    
 
     <script src="{{asset('assets/user/script.js')}}"></script>
 </body>

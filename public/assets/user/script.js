@@ -33,3 +33,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+
+// --- Update Items Modal Logic ---
+        const updateModal = document.getElementById("updateItemsModal");
+        const editBtns = document.querySelectorAll(".edit-btn");
+        const updateSpan = document.querySelector("#updateItemsModal .close-btn");
+
+        editBtns.forEach(btn => {
+            btn.onclick = function(e) {
+                e.preventDefault();
+                updateModal.style.display = "flex";
+            }
+        });
+
+        updateSpan.onclick = function() {
+            updateModal.style.display = "none";
+        }
+
+        // --- Global Window Click ---
+        window.onclick = function(event) {
+            if (event.target == addModal) {
+                addModal.style.display = "none";
+            }
+            if (event.target == updateModal) {
+                updateModal.style.display = "none";
+            }
+        }

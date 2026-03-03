@@ -31,7 +31,10 @@ Route::middleware('admin')->group(function () {
     Route::get('/user/userMenu', [AdminController::class, 'userMenu'])->name('admin.userMenu');
     // Route::get('/inventory', [AdminController::class, 'inventory'])->name('admin.inventory');
     Route::post('/inventory', [AdminController::class, 'store'])->name('inventory.store');
+    Route::put('/inventory/itemUpdate/{id}', [AdminController::class, 'updateItem'])->name('inventory.itemUpdate');
+    Route::delete('/inventory/delete/{id}',[AdminController::class,'deleteItem'])->name('inventory.delete');
     Route::post('/user', [AdminController::class, 'userStore'])->name('admin.addUser');
+    Route::delete('/delete/{id}',[AdminController::class,'deleteUser'])->name('admin.deleteUser');
 });
 
 require __DIR__.'/auth.php';

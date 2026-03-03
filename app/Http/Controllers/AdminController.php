@@ -71,6 +71,22 @@ class AdminController extends Controller
         return view('inventory.index', compact('categories')); // for inventory
     }
 
+    //edit item
+    public function updateItem(Request $request,string $id){
+        $inventory = Inventory::find($id);
+        $inventory->update($request->all());
+        $inventory->save();
+        return redirect()->back()->with('success', 'edit successfully');
+        
+    }
+    //item delete
+    public function deleteItem(string $id){
+        $inventory = Inventory::find($id);
+        $inventory->delete();
+
+        return reditect()->route('admin.item').with('success','item delete successfull!');
+    }
+ 
     public function order()
     {
         return view('bill.index');
@@ -80,7 +96,7 @@ class AdminController extends Controller
     {
         return view('report.index');
     }
-
+    
     //for add user
     public function userStore(Request $request){
         $validatedData = $request->validate([
@@ -106,6 +122,13 @@ class AdminController extends Controller
         }
        
 
+    }
+
+    //delete user 
+    public function deleteUser(string $id){
+        $user = User::find($id);
+        $user->delete();
+        return redirect()->route('admin.user');
     }
     public function userMenu()
     {

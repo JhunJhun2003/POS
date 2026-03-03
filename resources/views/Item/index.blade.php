@@ -89,8 +89,15 @@
                                 <td>{{ $item->exp_Date }}</td>
                                 <td>{{ $item->alert_Date }}</td>
                                 <td class="actions">
-                                    <a href="#" class="action-link edit-btn">Edit</a>
-                                    <a href="#" class="action-link">Delete</a>
+                                    
+                                        <button data-id="{{$item->id}}" data-itemcode = "{{ $item->itemCode }}" data-itemname="{{$item->itemName}}" data-price ="{{ $item->price }}" data-qty = "{{ $item->quantity}}" data-cost = "{{ $item->cost }}" data-category="{{ $item->categoryid}}" data-expdate="{{ $item->exp_Date }}" data-alertdate="{{ $item->alert_Date }}" class="action-link edit-btn">Edit</button>
+                                    <form action="{{route('inventory.delete',$item->id)}}" method="post">
+                                        @csrf 
+                                        @method('DELETE')
+                                        <button type="submit" class="btn-delete" onclick="confirm('Are you sure delete')">Delete</button>
+                                    </form>
+                                    
+                                       
                                 </td>
                             </tr>   
                         @endforeach
@@ -168,41 +175,47 @@
         <div class="modal-content">
             <span class="close-btn">&times;</span>
             <h2 class="modal-title">Update Items Form</h2>
-            <form class="add-items-form">
+            <form class="add-items-form" id="editForm" method="POST">
+                @csrf 
+                @method('PUT')
                 <div class="form-group">
                     <label>Item Code</label>
-                    <input type="text">
+                    <input type="text" id="itemCode" name="itemCode">
                 </div>
                 <div class="form-group">
                     <label>Name</label>
-                    <input type="text">
+                    <input type="text" id="itemName" name="itemName">
                 </div>
                 <div class="form-group">
                     <label>Price</label>
-                    <input type="text">
+                    <input type="text" id="price" name="price">
                 </div>
                 <div class="form-group">
                     <label>Quantity</label>
-                    <input type="text">
+                    <input type="text" id="qty" name="quantity">
                 </div>
                 <div class="form-group">
                     <label>Cost</label>
-                    <input type="text">
+                    <input type="text" id="cost" name="cost">
                 </div>
                 <div class="form-group">
                     <label>Catagory</label>
-                    <input type="text">
+                    <select name="categoryid" id="edit_category" class="form-control" style="width:200px;height:30px;background:#cecece" required>
+                       
+                        
+                    </select>
                 </div>
                 <div class="form-group">
                     <label>Exp. Date</label>
-                    <input type="text">
+                    <input type="date" id="Expdate" name="exp_Date">
                 </div>
                 <div class="form-group">
                     <label>Alert Date</label>
-                    <input type="text">
+                    <input type="date" id="alertDate" name="alert_Date">
                 </div>
+                
                 <div class="form-actions">
-                    <button type="button" class="btn-add">Update</button>
+                    <button type="submit" class="btn-add">Update</button>
                 </div>
             </form>
         </div>
@@ -247,6 +260,66 @@
                 updateModal.style.display = "none";
             }
         }
+
+        editBtns.forEach(button => {
+             button.addEventListener('click',function(){
+               let itemId = this.dataset.id;
+               let itemCode = this.dataset.itemcode;
+               let itemName = this.dataset.itemname;
+               let price = this.dataset.price;
+               let qty = this.dataset.qty;
+               let cost = this.dataset.cost;
+            //   let category = this.dataset.category;
+               let expDate = this.dataset.expdate;
+               let alertDate = this.dataset.alertdate;
+
+            //   console.log(id, itemCode, itemName, price, qty, cost, category, expDate, alertDate);
+
+                let formattedExpDate = expDate ? expDate.substring(0, 10) : "";
+                let formattedAlertDate = alertDate ? alertDate.substring(0, 10) : "";
+
+               document.getElementById('itemCode').value= itemCode;
+                document.getElementById('itemName').value= itemName;
+                document.getElementById('price').value= price;
+                document.getElementById('qty').value= qty;
+                document.getElementById('cost').value= cost;
+                let category = document.getElementById('categoryid');
+                document.getElementById('Expdate').value= formattedExpDate;
+                document.getElementById('alertDate').value= formattedAlertDate;
+                
+              
+            const allCategories = @json($categories); 
+            console.log(allCategories);
+            
+            
+            let selectedCatId = parseInt(this.dataset.category); 
+            let optionsHtml = '';
+
+            allCategories.forEach(cat => {
+               
+                let isSelected = (cat.id === selectedCatId) ? 'selected' : '';
+                optionsHtml += `
+                <option value="${cat.id}" ${isSelected}>${cat.name}</option>
+                `;
+            });
+
+            
+            document.getElementById('edit_category').innerHTML = optionsHtml;
+                //console.log(id);
+                
+                let editForm = document.getElementById('editForm');
+                if (editForm) {
+                    
+                    let routeUrl = "{{ route('inventory.itemUpdate', ':id') }}"; 
+                    
+                    
+                    editForm.action = routeUrl.replace(':id', itemId); 
+                    
+                    console.log("Form Action URL:", editForm.action); 
+                }
+               
+             });
+        });
     </script>
 </body>
 
