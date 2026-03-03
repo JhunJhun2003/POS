@@ -158,7 +158,7 @@
 
 
     <!--edit manager or user-->
-    <div id="user-modal-overlay" class="modal-overlay">
+    <div id="edit-modal-overlay" class="modal-overlay">
         <form  method="post">
             @csrf 
             @method('PUT')

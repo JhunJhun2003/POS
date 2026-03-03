@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const modalOverlay = document.getElementById('modal-overlay');
     const userModalOverlay = document.getElementById('user-modal-overlay');
+    const ediModalOverlay = document.getElementById('edit-modal-overlay');
     const addRowOverlay = document.getElementById('add-row-overlay');
 
     // Show Registration Modal
@@ -15,6 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
     userBtn.addEventListener('click', () => {
         userModalOverlay.classList.add('active');
     });
+
+    //show edit modal
+    document.querySelectorAll('.btn-edit').forEach()
 
     // Show Add Row Modal
     addRowBtn.addEventListener('click', () => {
