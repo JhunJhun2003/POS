@@ -240,7 +240,7 @@
                     <!-- Totals -->
                     <div class="receipt-totals">
                         <div class="total-row">
-                            <span>Total Amount:</span>
+                            <span>Total:</span>
                             <span class="highlight" id="totalAmount">0.00</span>
                         </div>
                         <div class="total-row">

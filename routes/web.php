@@ -32,7 +32,7 @@ Route::post('/save-bill', [AdminController::class, 'saveBill'])->name('admin.sav
 
     Route::get('/user', [AdminController::class, 'user'])->name('admin.user');
     Route::get('/user/userMenu', [AdminController::class, 'userMenu'])->name('admin.userMenu');
-    // Route::get('/inventory', [AdminController::class, 'inventory'])->name('admin.inventory');
+    Route::get('/order', [AdminController::class, 'order'])->name('admin.order');
     Route::post('/inventory', [AdminController::class, 'store'])->name('inventory.store');
     Route::post('/user', [AdminController::class, 'userStore'])->name('admin.addUser');
 });

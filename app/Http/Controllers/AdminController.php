@@ -206,6 +206,10 @@ class AdminController extends Controller
         return view('user.userMenu');
     }
 
+    public function order()
+    {
+        return view('order.index');
+    }
     public function user()
     {
         $users = User::all();
