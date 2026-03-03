@@ -1,0 +1,32 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('salereport', function (Blueprint $table) {
+            $table->id();
+            $table->date('sale_date');
+            $table->integer('bill_no')->foreign('bill_id')->references('id')->on('bills')->onDelete('cascade');
+            $table->integer('cashier_id')->foreign('cashier_id')->references('id')->on('users')->onDelete('cascade');
+            $table->decimal('total_amount', 10, 2);
+            
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('salereport');
+    }
+};
