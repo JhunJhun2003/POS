@@ -74,6 +74,25 @@ class AdminController extends Controller
         return view('inventory.index', compact('categories')); // for inventory
     }
 
+    //update item
+    public function updateItem(Request $request,string $id){
+        $inventory = Inventory::find($id);
+        $inventory->update($request->all());
+
+        $inventory->save();
+
+        return redirect()->back()->with('success','item update successfull!!');
+
+    }
+
+    //delete item 
+    public function deleteItem(string $id){
+        $inventory = inventory::find($id);
+        $inventory->delete();
+
+        return redirect()->route('admin.item')->with('success','item delete successfull!!');
+    }
+
     public function bill()
     {
         $cashier = User::where('usertype', 'user')->get(); // Fetch all users with usertype 'cashier'

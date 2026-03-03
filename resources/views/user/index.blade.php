@@ -156,6 +156,44 @@
         </form>
     </div>
 
+
+    <!--edit manager or user-->
+    <div id="user-modal-overlay" class="modal-overlay">
+        <form  method="post">
+            @csrf 
+            @method('PUT')
+            <div class="modal-content">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" name="name"  placeholder="">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" name="confirm_password" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <select name="usertype">
+                        <option value="" disabled selected>Select</option>
+                        <!--<option value="admin">Admin</option>
+                        <option value="manager">Manager</option>-->
+                        <option value="user">User</option>
+                    </select>
+                </div>
+            
+                <button type="submit" class="btn btn-register">Register</button>
+            </div>
+        </form>
+    </div>
+
     
 
     <script src="{{asset('assets/user/script.js')}}"></script>
