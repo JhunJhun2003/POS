@@ -6,5 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class SaleReport extends Model
 {
-    //
+    protected $table = 'salereport';
+    protected $fillable = [
+        'sale_date',
+        'bill_no',
+        'cashier_id',
+        'total_amount'
+    ];
 }

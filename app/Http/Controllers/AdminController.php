@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\Inventory;
-use Illuminate\Http\Request;
-use App\Models\User;
 use App\Models\Bill;
 use App\Models\BillItem;
+use App\Models\Category;
+use App\Models\Inventory;
+use App\Models\SaleReport;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
@@ -77,24 +78,26 @@ class AdminController extends Controller
     public function bill()
     {
         $cashier = User::where('usertype', 'user')->get(); // Fetch all users with usertype 'cashier'
+
         return view('bill.index', compact('cashier'));
     }
+
     public function getItemPrice(Request $request)
     {
         try {
             $itemCode = $request->input('item_code');
-            
+
             if (empty($itemCode)) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Item code is required'
+                    'message' => 'Item code is required',
                 ]);
             }
 
             // Search for the item
             $item = Inventory::where('itemCode', $itemCode)
-                        ->orWhere('itemName', 'LIKE', '%' . $itemCode . '%')
-                        ->first();
+                ->orWhere('itemName', 'LIKE', '%'.$itemCode.'%')
+                ->first();
 
             if ($item) {
                 return response()->json([
@@ -102,19 +105,19 @@ class AdminController extends Controller
                     'price' => $item->price,
                     'item_name' => $item->itemName,
                     'item_code' => $item->itemCode,
-                    'stock' => $item->quantity
+                    'stock' => $item->quantity,
                 ]);
             }
 
             return response()->json([
                 'success' => false,
-                'message' => 'Item not found'
+                'message' => 'Item not found',
             ]);
 
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Error: ' . $e->getMessage()
+                'message' => 'Error: '.$e->getMessage(),
             ], 500);
         }
     }
@@ -138,7 +141,7 @@ class AdminController extends Controller
                 'total_amount' => $total,
                 'tax_amount' => $tax,
                 'grand_total' => $grandTotal,
-                'bill_date' => now()
+                'bill_date' => now(),
             ]);
 
             // Create bill items
@@ -147,36 +150,42 @@ class AdminController extends Controller
                     'bill_id' => $bill->id,
                     'item_id' => $item['item_code'],
                     'quantity' => $item['quantity'],
-                    'amount' => $item['amount']
+                    'amount' => $item['amount'],
                 ]);
 
                 // Update stock
                 Inventory::where('itemCode', $item['item_code'])
                     ->decrement('quantity', $item['quantity']);
             }
+            $salereport = new SaleReport;
+            $salereport->sale_date = $bill->bill_date;
+            $salereport->bill_no = $bill->bill_number;
+            $salereport->cashier_id = Auth::id();
+            $salereport->total_amount = $total;
+            $salereport->save();
 
             return response()->json([
                 'success' => true,
                 'bill_id' => $bill->id,
-                'bill_no' => $bill->bill_no
+                'bill_no' => $bill->bill_no,
             ]);
 
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Error: ' . $e->getMessage()
+                'message' => 'Error: '.$e->getMessage(),
             ], 500);
         }
     }
-
 
     public function report()
     {
         return view('report.index');
     }
 
-    //for add user
-    public function userStore(Request $request){
+    // for add user
+    public function userStore(Request $request)
+    {
         $validatedData = $request->validate([
             'name' => 'required',
             'email' => 'required|email',
@@ -186,21 +195,22 @@ class AdminController extends Controller
 
         ]);
 
-        if($validatedData['password'] === $validatedData['confirm_password']){
-             $user = new User;
+        if ($validatedData['password'] === $validatedData['confirm_password']) {
+            $user = new User;
             $user->name = $validatedData['name'];
             $user->email = $validatedData['email'];
             $user->password = $validatedData['password'];
             $user->usertype = $validatedData['usertype'];
 
             $user->save();
-            return redirect()->back()->with('success','user added successfull');
-        }else{
-            return redirect()->back()->with('error','Error');
+
+            return redirect()->back()->with('success', 'user added successfull');
+        } else {
+            return redirect()->back()->with('error', 'Error');
         }
-       
 
     }
+
     public function userMenu()
     {
         return view('user.userMenu');
@@ -210,9 +220,11 @@ class AdminController extends Controller
     {
         return view('order.index');
     }
+
     public function user()
     {
         $users = User::all();
+
         return view('user.index', compact('users'));
     }
 }
