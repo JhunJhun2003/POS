@@ -8,8 +8,10 @@
     --table-header-bg: #4a90e2;
     --table-header-text: #fff;
     --border-color: #ccc;
+    --transition: all 0.3s ease;
 }
 
+/* Global Resets */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -23,12 +25,12 @@ body {
     display: flex;
     justify-content: center;
     padding: 20px;
+    line-height: 1.6;
 }
 
 .container {
     width: 100%;
-    max-width: 1000px;
-    background-color: var(--bg-color);
+    max-width: 1100px;
 }
 
 /* Header Styles */
@@ -48,24 +50,37 @@ body {
 .header-center h1 {
     font-size: 2.5rem;
     font-weight: 800;
+    text-align: center;
 }
 
+/* Button Styles */
 .btn {
     border: none;
     border-radius: 8px;
-    padding: 8px 16px;
+    padding: 8px 20px;
     cursor: pointer;
     font-weight: 600;
-    transition: background 0.3s;
+    transition: var(--transition);
 }
 
-.btn-main {
+.btn-main-menu {
     background-color: var(--primary-blue);
     color: white;
-    font-size: 1rem;
 }
 
-/* Middle Section Cards */
+.btn-primary {
+    background-color: var(--primary-blue);
+    color: white;
+    width: 200px;
+    padding: 12px;
+}
+
+.btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+/* Top Section (Action & Terms Cards) */
 .top-section {
     display: flex;
     gap: 20px;
@@ -88,15 +103,9 @@ body {
     gap: 15px;
 }
 
-.btn-primary {
-    background-color: var(--primary-blue);
-    color: white;
-    width: 200px;
-    padding: 12px;
-}
-
 .terms-card h3 {
     margin-bottom: 15px;
+    font-size: 1.2rem;
 }
 
 .terms-card ol {
@@ -104,8 +113,8 @@ body {
 }
 
 .terms-card li {
-    margin-bottom: 10px;
-    font-size: 0.9rem;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
 }
 
 /* Table Styles */
@@ -113,7 +122,7 @@ body {
     background-color: #fff;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 }
 
 .user-table {
@@ -124,7 +133,7 @@ body {
 .user-table th {
     background-color: var(--table-header-bg);
     color: var(--table-header-text);
-    padding: 12px;
+    padding: 15px;
     text-align: center;
     font-weight: 600;
 }
@@ -140,46 +149,25 @@ body {
     font-weight: 500;
 }
 
-.btn-add {
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 4px 10px;
-    cursor: pointer;
-    font-size: 0.8rem;
-}
-
+/* Table Buttons */
 .action-buttons {
     display: flex;
-    gap: 5px;
+    gap: 8px;
     justify-content: center;
 }
 
-.btn-edit,
-.btn-delete {
-    background-color: #e0e0e0;
+.btn-edit, .btn-delete {
+    background-color: #eee;
     border: none;
     border-radius: 4px;
-    padding: 4px 8px;
+    padding: 6px 12px;
     cursor: pointer;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
+    transition: var(--transition);
 }
 
-.btn-edit:hover,
-.btn-delete:hover {
-    background-color: #d0d0d0;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .top-section {
-        flex-direction: column;
-    }
-
-    .header-center h1 {
-        font-size: 1.8rem;
-    }
-}
+.btn-edit:hover { background-color: #d1e7ff; color: var(--primary-blue); }
+.btn-delete:hover { background-color: #ffd1d1; color: var(--text-red); }
 
 /* Modal Styles */
 .modal-overlay {
@@ -188,12 +176,12 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: none;
-    /* Hidden by default */
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none; /* JavaScript နဲ့ active class ပေးမှ ပေါ်မည် */
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 2000;
+    backdrop-filter: blur(2px);
 }
 
 .modal-overlay.active {
@@ -202,47 +190,94 @@ body {
 
 .modal-content {
     background-color: var(--bg-color);
-    /* Same beige as main page */
-    padding: 30px;
-    border-radius: 4px;
-    width: 320px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    padding: 40px 30px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 380px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Close Button (X) */
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+    line-height: 1;
+    transition: var(--transition);
+}
+
+.close-btn:hover {
+    color: var(--text-red);
+}
+
+/* Form Inside Modal */
+.modal-content h3 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: var(--primary-blue);
 }
 
 .form-group {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    gap: 10px;
+    flex-direction: column;
+    margin-bottom: 15px;
 }
 
 .form-group label {
     font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: 600;
+    margin-bottom: 5px;
 }
 
 .form-group input,
 .form-group select {
-    background-color: #d8dbdf;
-    border: none;
-    padding: 8px;
-    width: 60%;
-    border-radius: 0;
-    font-size: 0.85rem;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    outline: none;
 }
 
-.form-group select {
-    color: var(--text-red);
-    text-align: center;
+.form-group input:focus {
+    border-color: var(--primary-blue);
 }
 
 .btn-register {
     background-color: var(--primary-blue);
     color: white;
     width: 100%;
-    margin-top: 20px;
-    padding: 10px;
+    margin-top: 10px;
+    padding: 12px;
     font-weight: 700;
     border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .top-section {
+        flex-direction: column;
+    }
+
+    .header-center h1 {
+        font-size: 1.8rem;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 10px;
+    }
 }

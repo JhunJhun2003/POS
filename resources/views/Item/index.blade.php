@@ -66,6 +66,7 @@
                 </div>
             </div>
             <div class="action-right">
+                <button class="btn btn-primary" id="addCategoryBtn">Add Category</button>
                 <button class="btn btn-primary" id="addItemsBtn">Add Items</button>
             </div>
         </div>
@@ -87,22 +88,37 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($items as $item)
-                        <tr>
-                            <td>{{ $item->itemCode }}</td>
-                            <td>{{ $item->itemName }}</td>
-                            <td>{{ $item->price }}</td>
-                            <td>{{ $item->quantity }}</td>
-                            <td>{{ $item->cost }}</td>
-                            <td>{{ $item->category ? $item->category->name : 'N/A' }}</td>
-                            <td>{{ $item->exp_Date }}</td>
-                            <td>{{ $item->alert_Date }}</td>
-                            <td class="actions">
-                                <a href="#" class="action-link edit-btn">Edit</a>
-                                <a href="#" class="action-link">Delete</a>
-                            </td>
-                        </tr>   
-                    @endforeach
+                    <tr>
+                        
+                        {{-- <td class="actions">
+                            <a href="#" class="action-link edit-btn">Edit</a>
+                            <a href="#" class="action-link">Delete</a>
+                        </td> --}}
+
+                        @foreach ($items as $item)
+                            <tr>
+                                <td>{{ $item->itemCode }}</td>
+                                <td>{{ $item->itemName }}</td>
+                                <td>{{ $item->price }}</td>
+                                <td>{{ $item->quantity }}</td>
+                                <td>{{ $item->cost }}</td>
+                                <td>{{ $item->category ? $item->category->name : 'N/A' }}</td>
+                                <td>{{ $item->exp_Date }}</td>
+                                <td>{{ $item->alert_Date }}</td>
+                                <td class="actions">
+                                    
+                                        <button data-id="{{$item->id}}" data-itemcode = "{{ $item->itemCode }}" data-itemname="{{$item->itemName}}" data-price ="{{ $item->price }}" data-qty = "{{ $item->quantity}}" data-cost = "{{ $item->cost }}" data-category="{{ $item->categoryid}}" data-expdate="{{ $item->exp_Date }}" data-alertdate="{{ $item->alert_Date }}" class="action-link edit-btn">Edit</button>
+                                    <form action="{{route('inventory.delete',$item->id)}}" method="post">
+                                        @csrf 
+                                        @method('DELETE')
+                                        <button type="submit" class="btn-delete" onclick="confirm('Are you sure delete')">Delete</button>
+                                    </form>
+                                    
+                                       
+                                </td>
+                            </tr>   
+                        @endforeach
+                    </tr>
                 </tbody>
             </table>
             <!-- Empty gray space -->
@@ -176,41 +192,65 @@
         <div class="modal-content">
             <span class="close-btn">&times;</span>
             <h2 class="modal-title">Update Items Form</h2>
-            <form class="add-items-form">
+            <form class="add-items-form" id="editForm" method="POST">
+                @csrf 
+                @method('PUT')
                 <div class="form-group">
                     <label>Item Code</label>
-                    <input type="text">
+                    <input type="text" id="itemCode" name="itemCode">
                 </div>
                 <div class="form-group">
                     <label>Name</label>
-                    <input type="text">
+                    <input type="text" id="itemName" name="itemName">
                 </div>
                 <div class="form-group">
                     <label>Price</label>
-                    <input type="text">
+                    <input type="text" id="price" name="price">
                 </div>
                 <div class="form-group">
                     <label>Quantity</label>
-                    <input type="text">
+                    <input type="text" id="qty" name="quantity">
                 </div>
                 <div class="form-group">
                     <label>Cost</label>
-                    <input type="text">
+                    <input type="text" id="cost" name="cost">
                 </div>
                 <div class="form-group">
                     <label>Catagory</label>
-                    <input type="text">
+                    <select name="categoryid" id="edit_category" class="form-control" style="width:200px;height:30px;background:#cecece" required>
+                       
+                        
+                    </select>
                 </div>
                 <div class="form-group">
                     <label>Exp. Date</label>
-                    <input type="text">
+                    <input type="date" id="Expdate" name="exp_Date">
                 </div>
                 <div class="form-group">
                     <label>Alert Date</label>
-                    <input type="text">
+                    <input type="date" id="alertDate" name="alert_Date">
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn-add">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!--add category-->
+     <div id="addCategoryModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2 class="modal-title">Add Items Form</h2>
+            <form class="add-items-form" method="POST" action="{{ route('inventory.category') }}">
+                @csrf
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" name="CategoryName">
                 </div>
                 <div class="form-actions">
-                    <button type="button" class="btn-add">Update</button>
+                    <button type="submit" class="btn-add">Add</button>
                 </div>
             </form>
         </div>
@@ -219,15 +259,26 @@
     <script>
         // --- Add Items Modal Logic ---
         const addModal = document.getElementById("addItemsModal");
+        const addCatModal = document.getElementById("addCategoryModal");
         const addBtn = document.getElementById("addItemsBtn");
+        const addCatBtn = document.getElementById('addCategoryBtn');
         const addSpan = document.querySelector("#addItemsModal .close-btn");
+        const addCatSpan = document.querySelector("#addCategoryModal .close-btn");
 
         addBtn.onclick = function() {
             addModal.style.display = "flex";
         }
 
+        addCatBtn.onclick = function() {
+            addCatModal.style.display = "flex";
+        }
+
         addSpan.onclick = function() {
             addModal.style.display = "none";
+        }
+
+        addCatSpan.onclick = function() {
+            addCatModal.style.display = "none";
         }
 
         // --- Update Items Modal Logic ---
@@ -239,7 +290,7 @@
             btn.onclick = function(e) {
                 e.preventDefault();
                 updateModal.style.display = "flex";
-            }
+            } 
         });
 
         updateSpan.onclick = function() {
@@ -255,6 +306,88 @@
                 updateModal.style.display = "none";
             }
         }
+
+        editBtns.forEach(button => {
+             button.addEventListener('click',function(){
+               let itemId = this.dataset.id;
+               let itemCode = this.dataset.itemcode;
+               let itemName = this.dataset.itemname;
+               let price = this.dataset.price;
+               let qty = this.dataset.qty;
+               let cost = this.dataset.cost;
+            //   let category = this.dataset.category;
+               let expDate = this.dataset.expdate;
+               let alertDate = this.dataset.alertdate;
+
+            //   console.log(id, itemCode, itemName, price, qty, cost, category, expDate, alertDate);
+
+                let formattedExpDate = expDate ? expDate.substring(0, 10) : "";
+                let formattedAlertDate = alertDate ? alertDate.substring(0, 10) : "";
+
+               document.getElementById('itemCode').value= itemCode;
+                document.getElementById('itemName').value= itemName;
+                document.getElementById('price').value= price;
+                document.getElementById('qty').value= qty;
+                document.getElementById('cost').value= cost;
+                let category = document.getElementById('categoryid');
+                document.getElementById('Expdate').value= formattedExpDate;
+                document.getElementById('alertDate').value= formattedAlertDate;
+                
+              
+            const allCategories = @json($categories); 
+            //console.log(allCategories);
+            
+            
+            let selectedCatId = parseInt(this.dataset.category); 
+            let optionsHtml = '';
+
+            allCategories.forEach(cat => {
+               
+                let isSelected = (cat.id === selectedCatId) ? 'selected' : '';
+                optionsHtml += `
+                <option value="${cat.id}" ${isSelected}>${cat.name}</option>
+                `;
+            });
+
+            
+            document.getElementById('edit_category').innerHTML = optionsHtml;
+               
+                
+                let editForm = document.getElementById('editForm');
+                if (editForm) {
+                    
+                    let routeUrl = "{{ route('inventory.itemUpdate', ':id') }}"; 
+                    
+                    
+                    editForm.action = routeUrl.replace(':id', itemId); 
+                    
+                   
+                }
+               
+             });
+        });
+
+
+
+        
+        // --- Search Logic ---
+    document.querySelector('.search-input').addEventListener('input', function() {
+    const searchTerm = this.value.toLowerCase(); 
+    const rows = document.querySelectorAll('.inventory-table tbody tr'); 
+
+    rows.forEach(row => {
+        
+        const text = row.textContent.toLowerCase();
+        
+        
+        if (text.includes(searchTerm)) {
+            row.style.display = ""; 
+        } else {
+            row.style.display = "none"; 
+        }
+    });
+});
+
     </script>
 </body>
 

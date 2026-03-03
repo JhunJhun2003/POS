@@ -27,8 +27,8 @@
 
         <section class="top-section">
             <div class="card action-card">
-                <button id="admin-btn" class="btn btn-primary">Admin and Manager</button>
-                <button id="user-btn" class="btn btn-primary">User and Cashier</button>
+                <button id="admin-btn" class="btn btn-primary">Add Manager</button>
+                <button id="user-btn" class="btn btn-primary">Add Cashier</button>
             </div>
             <div class="card terms-card">
                 <h3>Terms and Conditions</h3>
@@ -68,9 +68,13 @@
                         <td class="text-red">{{$user->name}}</td>
                         <td class="text-red">********</td>
                         <td>
-                            <div class="action-buttons">
-                                <button class="btn-edit">Edit</button>
-                                <button class="btn-delete">Delete</button>
+                            <div class="action-buttons"> 
+                                <button class="btn-edit edit-btn" data-id="{{$user->id}}" data-name="{{$user->name}}" data-email="{{$user->email}}" data-role="{{$user->usertype}}" >Edit</button>
+                                <form action="{{route('admin.deleteUser',$user->id)}}" method="post">
+                                    @csrf 
+                                    @method('DELETE')
+                                    <button type="submit" class="btn-delete" onclick="confirm('Are you sure delete')">Delete</button>
+                                </form>
                             </div>
                         </td>
                     </tr>
@@ -82,42 +86,47 @@
 
     <!-- Registration Modal (Admin/Manager/) -->
     <div id="modal-overlay" class="modal-overlay">
-        <form action="{{ route('admin.addUser') }}" method="post">
-            @csrf 
-            <div class="modal-content">
-                <div class="form-group">
-                    <label>Username</label>
-                    <input type="text" name="name"  placeholder="">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <form action="{{ route('admin.addUser') }}" method="post">
+                @csrf 
+                <div class="modal-content">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" name="name"  placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" name="password" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <input type="password" name="confirm_password" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label>Role</label>
+                        <select name="usertype">
+                            <option value="" disabled selected></option>
+                            <!--<option value="admin">Admin</option>-->
+                            <option value="manager">Manager</option>
+                            <!--<option value="user">User</option>-->
+                        </select>
+                    </div>
+                
+                    <button type="submit" class="btn btn-register">Register</button>
                 </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" name="email" placeholder="">
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" name="password" placeholder="">
-                </div>
-                <div class="form-group">
-                    <label>Confirm Password</label>
-                    <input type="password" name="confirm_password" placeholder="">
-                </div>
-                <div class="form-group">
-                    <label>Role</label>
-                    <select name="usertype">
-                        <option value="" disabled selected>&lt;Dropdown Box&gt;</option>
-                        <option value="admin">Admin</option>
-                        <option value="manager">Manager</option>
-                        <!--<option value="user">User</option>-->
-                    </select>
-                </div>
-            
-                <button type="submit" class="btn btn-register">Register</button>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 
     <!-- Registration Modal (User/Cashier) -->
     <div id="user-modal-overlay" class="modal-overlay">
+        <div class="modal-content">
+        <span class="close-btn">&times;</span>
         <form action="{{ route('admin.addUser') }}" method="post">
             @csrf 
             <div class="modal-content">
@@ -140,7 +149,7 @@
                 <div class="form-group">
                     <label>Role</label>
                     <select name="usertype">
-                        <option value="" disabled selected>&lt;Dropdown Box&gt;</option>
+                        <option value="" disabled selected>Select</option>
                         <!--<option value="admin">Admin</option>
                         <option value="manager">Manager</option>-->
                         <option value="user">User</option>
@@ -150,40 +159,48 @@
                 <button type="submit" class="btn btn-register">Register</button>
             </div>
         </form>
+        </div>
     </div>
 
-    <!-- Add Row Modal -->
-    <!--<div id="add-row-overlay" class="modal-overlay">
-        <div class="modal-content">
-            <div class="form-group">
-                <label>Name</label>
-                <input type="text" placeholder="">
+
+    <!--edit modal-->
+    <div id="edit-modal-overlay" class="modal-overlay">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <form id="editForm"  method="post">
+            @csrf 
+            @method('PUT')
+            <h3>Edit User</h3>
+             <div class="modal-content">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" name="name" id="name"  placeholder="">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" id="email" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <select name="usertype" id="edit_usertype">
+                        
+                    </select>
+                </div>
+            
+                <button type="submit" class="btn btn-register">Update</button>
             </div>
-            <div class="form-group">
-                <label>Position</label>
-                <input type="text" placeholder="">
-            </div>
-            <div class="form-group">
-                <label>Username</label>
-                <input type="text" placeholder="">
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" placeholder="">
-            </div>
-            <div class="form-group">
-                <label>Role</label>
-                <select>
-                    <option value="" disabled selected>&lt;Dropdown Box&gt;</option>
-                    <option value="admin">Admin</option>
-                    <option value="manager">Manager</option>
-                    <option value="user">User</option>
-                    <option value="cashier">Cashier</option>
-                </select>
-            </div>
-            <button class="btn btn-register">Add</button>
+            
+        </form>
+    </div>
+</div>
+
+<!--<div id="modal-overlay" class="modal-overlay">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
         </div>
-    </div>-->
+</div>-->
+
+    
 
     <script src="{{asset('assets/user/script.js')}}"></script>
 </body>

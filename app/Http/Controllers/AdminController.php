@@ -10,6 +10,8 @@ use App\Models\SaleReport;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Order;
+
 
 class AdminController extends Controller
 {
@@ -69,12 +71,44 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'Item added successfully!');
     }
 
+    public function addCategory(Request $request){
+        //dd($request);
+         $validatedData = $request->validate([
+            'CategoryName' => 'required|unique:inventory,itemCode',
+            
+        ]);
+        $category = new Category ;
+        $category->name = $validatedData['CategoryName'];
+        $category->save();
+         return redirect()->back()->with('success', 'Category added successfully!');
+
+    }
+
     // //
     public function inventory()
     {
         $categories = Category::all(); // Fetch all categories to populate the dropdown
 
         return view('inventory.index', compact('categories')); // for inventory
+    }
+
+    //update item
+    public function updateItem(Request $request,string $id){
+        $inventory = Inventory::find($id);
+        $inventory->update($request->all());
+
+        $inventory->save();
+
+        return redirect()->back()->with('success','item update successfull!!');
+
+    }
+
+    //delete item 
+    public function deleteItem(string $id){
+        $inventory = inventory::find($id);
+        $inventory->delete();
+
+        return redirect()->route('admin.item')->with('success','item delete successfull!!');
     }
 
     public function bill()
@@ -220,7 +254,10 @@ class AdminController extends Controller
 
     public function order()
     {
-        return view('order.index');
+        $users = User::all();
+        $orders = Order::all();
+
+        return view('order.index', compact('users','orders'));
     }
 
     public function user()
@@ -228,5 +265,21 @@ class AdminController extends Controller
         $users = User::all();
 
         return view('user.index', compact('users'));
+    }
+    //edit user
+    public function updateUser(Request $request,string $id){
+        $user = User::find($id);
+        $user->update($request->all());
+
+        $user->save();
+
+        return redirect()->back()->with('success','item update successfull!!'); 
+    }
+
+    public function deleteUser(string $id){
+        $user = User::find($id);
+        $user->delete();
+
+        return redirect()->route('admin.user')->with('success','item delete successfull!!');
     }
 }
