@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
+use Carbon\Carbon;
 
 
 class AdminController extends Controller
@@ -19,7 +20,12 @@ class AdminController extends Controller
     {
         $saleReports = SaleReport::with('user')->latest()->get(); 
         
-        return view('index', compact('saleReports')); // for dashboard
+        $totalSales = SaleReport::sum('total_amount');
+        $totalItems = Inventory::sum('quantity');
+        $totalUsers = User::count();
+        $totalTransactions = SaleReport::count();
+
+        return view('index', compact('saleReports', 'totalSales', 'totalItems', 'totalUsers', 'totalTransactions')); // for dashboard
     }
 
     public function item()
@@ -214,9 +220,93 @@ class AdminController extends Controller
         }
     }
 
-    public function report()
+    public function report(Request $request)
     {
-        return view('report.index');
+        $reportType = $request->get('type', 'daily');
+        $results = collect();
+        $cashiers = User::whereIn('usertype', ['admin', 'manager', 'user'])->get();
+
+        if ($reportType == 'daily') {
+            $query = SaleReport::with('user');
+            if ($request->filled('date')) {
+                $query->whereDate('sale_date', $request->date);
+            }
+            if ($request->filled('cashier_id')) {
+                $query->where('cashier_id', $request->cashier_id);
+            }
+            if ($request->filled('bill_no')) {
+                $query->where('bill_no', 'like', '%' . $request->bill_no . '%');
+            }
+            $results = $query->latest()->get();
+        } elseif ($reportType == 'monthly') {
+            $query = SaleReport::with('user');
+            if ($request->filled('month')) {
+                $date = Carbon::parse($request->month);
+                $query->whereMonth('sale_date', $date->month)
+                      ->whereYear('sale_date', $date->year);
+            }
+            if ($request->filled('cashier_id')) {
+                $query->where('cashier_id', $request->cashier_id);
+            }
+            $results = $query->latest()->get();
+        } elseif ($reportType == 'stocks') {
+            $query = Inventory::with('category');
+            if ($request->filled('itemCode')) {
+                $query->where('itemCode', 'like', '%' . $request->itemCode . '%');
+            }
+            if ($request->filled('itemName')) {
+                $query->where('itemName', 'like', '%' . $request->itemName . '%');
+            }
+            $results = $query->get();
+        }
+
+        if ($request->has('export')) {
+            $fileName = $reportType . '_report_' . date('Y-m-d') . '.csv';
+            $headers = array(
+                "Content-type"        => "text/csv",
+                "Content-Disposition" => "attachment; filename=$fileName",
+                "Pragma"              => "no-cache",
+                "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+                "Expires"             => "0"
+            );
+
+            $columns = $reportType == 'stocks' 
+                ? ['No', 'Item Code', 'Name', 'Category', 'Quantity', 'Cost', 'Price', 'Exp. Date']
+                : ['No', 'Date', 'Voucher No', 'Total Amount', 'Cashier'];
+
+            $callback = function() use($results, $columns, $reportType) {
+                $file = fopen('php://output', 'w');
+                fputcsv($file, $columns);
+
+                foreach ($results as $index => $item) {
+                    $row = $reportType == 'stocks'
+                        ? [
+                            $index + 1,
+                            $item->itemCode,
+                            $item->itemName,
+                            $item->category ? $item->category->name : 'N/A',
+                            $item->quantity,
+                            $item->cost,
+                            $item->price,
+                            $item->exp_Date
+                          ]
+                        : [
+                            $index + 1,
+                            $item->sale_date,
+                            $item->bill_no,
+                            $item->total_amount,
+                            $item->user ? $item->user->name : 'N/A'
+                          ];
+                    fputcsv($file, $row);
+                }
+
+                fclose($file);
+            };
+
+            return response()->stream($callback, 200, $headers);
+        }
+
+        return view('report.index', compact('results', 'reportType', 'cashiers'));
     }
 
     // for add user
@@ -269,6 +359,12 @@ class AdminController extends Controller
     //edit user
     public function updateUser(Request $request,string $id){
         $user = User::find($id);
+
+        // Restriction: Manager cannot edit Admin
+        if (auth()->user()->usertype === 'manager' && $user->usertype === 'admin') {
+            return redirect()->back()->with('error', 'Managers cannot edit Admin accounts.');
+        }
+
         $user->update($request->all());
 
         $user->save();
@@ -278,6 +374,12 @@ class AdminController extends Controller
 
     public function deleteUser(string $id){
         $user = User::find($id);
+        
+        // Restriction: Manager cannot delete Admin
+        if (auth()->user()->usertype === 'manager' && $user->usertype === 'admin') {
+            return redirect()->back()->with('error', 'Managers cannot delete Admin accounts.');
+        }
+
         $user->delete();
 
         return redirect()->route('admin.user')->with('success','item delete successfull!!');

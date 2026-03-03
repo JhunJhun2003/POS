@@ -9,7 +9,7 @@ use App\Http\Controllers\orderController;
 
 Route::get('/', function () {
     if (auth()->check()) {
-        if (auth()->user()->usertype === 'admin') {
+        if (auth()->user()->usertype === 'admin' || auth()->user()->usertype === 'manager') {
             return redirect()->route('admin.index');
         }
         return redirect()->route('user.index');
@@ -18,7 +18,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    if (auth()->user()->usertype === 'admin') {
+    if (auth()->user()->usertype === 'admin' || auth()->user()->usertype === 'manager') {
         return redirect()->route('admin.index');
     }
     return redirect()->route('user.index');

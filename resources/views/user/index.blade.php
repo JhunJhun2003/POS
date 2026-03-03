@@ -69,12 +69,16 @@
                         <td class="text-red">********</td>
                         <td>
                             <div class="action-buttons"> 
+                                @if(!(auth()->user()->usertype === 'manager' && $user->usertype === 'admin'))
                                 <button class="btn-edit edit-btn" data-id="{{$user->id}}" data-name="{{$user->name}}" data-email="{{$user->email}}" data-role="{{$user->usertype}}" >Edit</button>
+                                @endif
+                                @if(!(auth()->user()->usertype === 'manager' && $user->usertype === 'admin'))
                                 <form action="{{route('admin.deleteUser',$user->id)}}" method="post">
                                     @csrf 
                                     @method('DELETE')
                                     <button type="submit" class="btn-delete" onclick="confirm('Are you sure delete')">Delete</button>
                                 </form>
+                                @endif
                             </div>
                         </td>
                     </tr>

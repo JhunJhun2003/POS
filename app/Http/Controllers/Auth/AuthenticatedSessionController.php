@@ -33,7 +33,7 @@ class AuthenticatedSessionController extends Controller
             'usertype' => auth()->user()->usertype
         ]);
 
-        if (auth()->user()->usertype === 'admin') {
+        if (auth()->user()->usertype === 'admin' || auth()->user()->usertype === 'manager') {
             \Illuminate\Support\Facades\Log::info('Redirecting to admin index');
             return redirect()->route('admin.index');
         }

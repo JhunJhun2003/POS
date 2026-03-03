@@ -55,7 +55,31 @@
             <!-- Main Content -->
             <main class="content">
                 <div class="content-header">
-                    <h2 class="content-title">Sales Report</h2>
+                    <h2 class="content-title">Dashboard Overview</h2>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-label">Total Sales</span>
+                        <span class="stat-value">{{ number_format($totalSales, 0, '.', ',') }} MMK</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Total Transactions</span>
+                        <span class="stat-value">{{ number_format($totalTransactions) }}</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Total Stock</span>
+                        <span class="stat-value">{{ number_format($totalItems) }}</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">System Users</span>
+                        <span class="stat-value">{{ number_format($totalUsers) }}</span>
+                    </div>
+                </div>
+
+                <div class="content-header">
+                    <h2 class="content-title">Recent Sales Report</h2>
                 </div>
 
                 <div class="table-card">
