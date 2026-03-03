@@ -79,4 +79,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::delete('/order/{id}',[orderController::class,'destroy'])->name('order.delete');
 });
 
+Route::middleware(['auth'])->prefix('user')->group(function () {
+    Route::get('/dashboard', [UserController::class, 'index'])->name('user.index');
+    Route::post('/get-item-price', [UserController::class, 'getItemPrice'])->name('user.get.item.price');
+    Route::post('/save-bill', [UserController::class, 'saveBill'])->name('user.save.bill');
+});
+
 require __DIR__.'/auth.php';
