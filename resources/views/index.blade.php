@@ -19,7 +19,6 @@
 
             <h1 class="store-title">ABK MINI MART</h1>
 
-            <button class="notification-btn">Notifications</button>
         </header>
 
         <div class="main-container">
@@ -88,7 +87,7 @@
                             <tr>
                                 <th class="col-no">No.</th>
                                 <th class="col-date">Date</th>
-                                <th class="col-bill">Bill Number</th>
+                                <th class="col-bill">Receipt no</th>
                                 <th class="col-price">Total Amount</th>
                                 <th class="col-cashier">Cashier</th>
                             </tr>

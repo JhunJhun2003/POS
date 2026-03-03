@@ -344,10 +344,9 @@ class AdminController extends Controller
 
     public function order()
     {
-        $users = User::all();
-        $orders = Order::all();
+        $orders = Order::with('user')->latest()->get();
 
-        return view('order.index', compact('users','orders'));
+        return view('order.index', compact('orders'));
     }
 
     public function user()
