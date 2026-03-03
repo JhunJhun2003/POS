@@ -50,6 +50,7 @@
                 </div>
             </div>
             <div class="action-right">
+                <button class="btn btn-primary" id="addCategoryBtn">Add Category</button>
                 <button class="btn btn-primary" id="addItemsBtn">Add Items</button>
             </div>
         </div>
@@ -221,18 +222,47 @@
         </div>
     </div>
 
+    <!--add category-->
+     <div id="addCategoryModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2 class="modal-title">Add Items Form</h2>
+            <form class="add-items-form" method="POST" action="{{ route('inventory.category') }}">
+                @csrf
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" name="CategoryName">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-add">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         // --- Add Items Modal Logic ---
         const addModal = document.getElementById("addItemsModal");
+        const addCatModal = document.getElementById("addCategoryModal");
         const addBtn = document.getElementById("addItemsBtn");
+        const addCatBtn = document.getElementById('addCategoryBtn');
         const addSpan = document.querySelector("#addItemsModal .close-btn");
+        const addCatSpan = document.querySelector("#addCategoryModal .close-btn");
 
         addBtn.onclick = function() {
             addModal.style.display = "flex";
         }
 
+        addCatBtn.onclick = function() {
+            addCatModal.style.display = "flex";
+        }
+
         addSpan.onclick = function() {
             addModal.style.display = "none";
+        }
+
+        addCatSpan.onclick = function() {
+            addCatModal.style.display = "none";
         }
 
         // --- Update Items Modal Logic ---
@@ -244,7 +274,7 @@
             btn.onclick = function(e) {
                 e.preventDefault();
                 updateModal.style.display = "flex";
-            }
+            } 
         });
 
         updateSpan.onclick = function() {
@@ -289,7 +319,7 @@
                 
               
             const allCategories = @json($categories); 
-            console.log(allCategories);
+            //console.log(allCategories);
             
             
             let selectedCatId = parseInt(this.dataset.category); 
@@ -305,7 +335,7 @@
 
             
             document.getElementById('edit_category').innerHTML = optionsHtml;
-                //console.log(id);
+               
                 
                 let editForm = document.getElementById('editForm');
                 if (editForm) {
@@ -315,11 +345,33 @@
                     
                     editForm.action = routeUrl.replace(':id', itemId); 
                     
-                    console.log("Form Action URL:", editForm.action); 
+                   
                 }
                
              });
         });
+
+
+
+        
+        // --- Search Logic ---
+    document.querySelector('.search-input').addEventListener('input', function() {
+    const searchTerm = this.value.toLowerCase(); 
+    const rows = document.querySelectorAll('.inventory-table tbody tr'); 
+
+    rows.forEach(row => {
+        
+        const text = row.textContent.toLowerCase();
+        
+        
+        if (text.includes(searchTerm)) {
+            row.style.display = ""; 
+        } else {
+            row.style.display = "none"; 
+        }
+    });
+});
+
     </script>
 </body>
 

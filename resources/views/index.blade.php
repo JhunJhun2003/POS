@@ -27,7 +27,7 @@
             <nav class="sidebar">
                 <a href="{{ route('admin.item') }}" style="text-decoration: none; color: white;"
                     class="nav-item">Items</a>
-                <a href="{{ route('admin.report') }}" style="text-decoration: none; color: white;"
+                <a href="{{ route('admin.bill') }}" style="text-decoration: none; color: white;"
                     class="nav-item">Bill</a>
                 <a href="{{ route('admin.user') }}" style="text-decoration: none; color: white;"
                     class="nav-item">Account</a>

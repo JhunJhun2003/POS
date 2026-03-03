@@ -10,6 +10,8 @@ use App\Models\SaleReport;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Order;
+
 
 class AdminController extends Controller
 {
@@ -65,6 +67,19 @@ class AdminController extends Controller
         $inventory->save();
 
         return redirect()->back()->with('success', 'Item added successfully!');
+    }
+
+    public function addCategory(Request $request){
+        //dd($request);
+         $validatedData = $request->validate([
+            'CategoryName' => 'required|unique:inventory,itemCode',
+            
+        ]);
+        $category = new Category ;
+        $category->name = $validatedData['CategoryName'];
+        $category->save();
+         return redirect()->back()->with('success', 'Category added successfully!');
+
     }
 
     // //
@@ -237,7 +252,10 @@ class AdminController extends Controller
 
     public function order()
     {
-        return view('order.index');
+        $users = User::all();
+        $orders = Order::all();
+
+        return view('order.index', compact('users','orders'));
     }
 
     public function user()
@@ -245,5 +263,21 @@ class AdminController extends Controller
         $users = User::all();
 
         return view('user.index', compact('users'));
+    }
+    //edit user
+    public function updateUser(Request $request,string $id){
+        $user = User::find($id);
+        $user->update($request->all());
+
+        $user->save();
+
+        return redirect()->back()->with('success','item update successfull!!'); 
+    }
+
+    public function deleteUser(string $id){
+        $user = User::find($id);
+        $user->delete();
+
+        return redirect()->route('admin.user')->with('success','item delete successfull!!');
     }
 }
