@@ -16,9 +16,12 @@ Route::get('/', function () {
     return view('Login.login');
 });
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', function () {
+    if (auth()->user()->usertype === 'admin') {
+        return redirect()->route('admin.index');
+    }
+    return redirect()->route('user.index');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 // Route::middleware('auth')->group(function () {
 //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

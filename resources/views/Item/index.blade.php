@@ -29,6 +29,22 @@
         <!-- Divider -->
         <div class="divider"></div>
 
+        @if (session('success'))
+            <div style="background-color: #d4edda; color: #155724; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div style="background-color: #f8d7da; color: #721c24; padding: 10px; margin-bottom: 10px; border-radius: 4px;">
+                <ul style="margin: 0;">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <!-- Action Bar -->
         <div class="action-bar">
             <div class="action-left">
@@ -71,30 +87,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        
-                        {{-- <td class="actions">
-                            <a href="#" class="action-link edit-btn">Edit</a>
-                            <a href="#" class="action-link">Delete</a>
-                        </td> --}}
-
-                        @foreach ($items as $item)
-                            <tr>
-                                <td>{{ $item->itemCode }}</td>
-                                <td>{{ $item->itemName }}</td>
-                                <td>{{ $item->price }}</td>
-                                <td>{{ $item->quantity }}</td>
-                                <td>{{ $item->cost }}</td>
-                                <td>{{ $item->category ? $item->category->name : 'N/A' }}</td>
-                                <td>{{ $item->exp_Date }}</td>
-                                <td>{{ $item->alert_Date }}</td>
-                                <td class="actions">
-                                    <a href="#" class="action-link edit-btn">Edit</a>
-                                    <a href="#" class="action-link">Delete</a>
-                                </td>
-                            </tr>   
-                        @endforeach
-                    </tr>
+                    @foreach ($items as $item)
+                        <tr>
+                            <td>{{ $item->itemCode }}</td>
+                            <td>{{ $item->itemName }}</td>
+                            <td>{{ $item->price }}</td>
+                            <td>{{ $item->quantity }}</td>
+                            <td>{{ $item->cost }}</td>
+                            <td>{{ $item->category ? $item->category->name : 'N/A' }}</td>
+                            <td>{{ $item->exp_Date }}</td>
+                            <td>{{ $item->alert_Date }}</td>
+                            <td class="actions">
+                                <a href="#" class="action-link edit-btn">Edit</a>
+                                <a href="#" class="action-link">Delete</a>
+                            </td>
+                        </tr>   
+                    @endforeach
                 </tbody>
             </table>
             <!-- Empty gray space -->
@@ -110,7 +118,7 @@
             <form class="add-items-form" method="POST" action="{{ route('inventory.store') }}">
                 @csrf
                 <div class="form-group">
-                    <label>Item Codee</label>
+                    <label>Item Code</label>
                     <input type="text" name="itemCode">
                 </div>
                 <div class="form-group">
