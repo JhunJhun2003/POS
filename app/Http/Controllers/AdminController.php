@@ -15,7 +15,10 @@ class AdminController extends Controller
 {
     public function index()
     {
-        return view('index'); // for dashboard
+        $saleReports = SaleReport::all(); 
+        // $saleReports = SaleReport::with('user')->get(); 
+        
+        return view('index', compact('saleReports')); // for dashboard
     }
 
     public function item()

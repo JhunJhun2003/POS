@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ABK Mini Mart - Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="assets/index.css" rel="stylesheet" />
+    <link href="{{ asset('assets/index.css') }}" rel="stylesheet" />
 </head>
 
 <body>
@@ -65,41 +65,20 @@
                                 <th class="col-no">No.</th>
                                 <th class="col-date">Date</th>
                                 <th class="col-bill">Bill Number</th>
-                                <th class="col-code">Item Code</th>
-                                <th class="col-name">Item Name</th>
-                                <th class="col-price">Price</th>
+                                <th class="col-price">Total Amount</th>
                                 <th class="col-cashier">Cashier</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Sample Data Row -->
-                            <tr>
-                                <td class="col-no">1</td>
-                                <td class="col-date">2026-03-01</td>
-                                <td class="col-bill">#BILL-1001</td>
-                                <td class="col-code">P001</td>
-                                <td class="col-name">Organic Apple Juice</td>
-                                <td class="col-price">4,500 MMK</td>
-                                <td class="col-cashier">Kyaw Kyaw</td>
-                            </tr>
-                            <tr>
-                                <td class="col-no">2</td>
-                                <td class="col-date">2026-03-01</td>
-                                <td class="col-bill">#BILL-1002</td>
-                                <td class="col-code">P002</td>
-                                <td class="col-name">Chocolate Cookies (200g)</td>
-                                <td class="col-price">2,800 MMK</td>
-                                <td class="col-cashier">Su Su</td>
-                            </tr>
-                            <tr>
-                                <td class="col-no">3</td>
-                                <td class="col-date">2026-03-01</td>
-                                <td class="col-bill">#BILL-1003</td>
-                                <td class="col-code">P003</td>
-                                <td class="col-name">Instant Coffee Mix</td>
-                                <td class="col-price">5,200 MMK</td>
-                                <td class="col-cashier">Aung Aung</td>
-                            </tr>
+                            @foreach ($saleReports as $index => $report)
+                                <tr>
+                                    <td class="col-no">{{ $index + 1 }}</td>
+                                    <td class="col-date">{{ $report->sale_date }}</td>
+                                    <td class="col-bill">#{{ $report->bill_no }}</td>
+                                    <td class="col-price">{{ number_format($report->total_amount, 0, '.', ',') }} MMK</td>
+                                    <td class="col-cashier">{{ $report->user ? $report->user->name : 'N/A' }}</td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

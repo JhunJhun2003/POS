@@ -26,11 +26,21 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-
         $request->session()->regenerate();
 
-        return redirect()->intended(route('admin.index', absolute: false));
-    }
+        \Illuminate\Support\Facades\Log::info('User logged in', [
+            'id' => auth()->id(),
+            'usertype' => auth()->user()->usertype
+        ]);
+
+        if (auth()->user()->usertype === 'admin') {
+            \Illuminate\Support\Facades\Log::info('Redirecting to admin index');
+            return redirect()->route('admin.index');
+        }
+
+        \Illuminate\Support\Facades\Log::info('Redirecting to user index');
+        return redirect()->route('user.index');
+    }   
 
     /**
      * Destroy an authenticated session.

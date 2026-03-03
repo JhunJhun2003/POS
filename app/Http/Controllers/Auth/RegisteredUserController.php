@@ -24,8 +24,8 @@ class RegisteredUserController extends Controller
     //     }
 
     //     abort(403, 'you are not authorized to access this page.Pleaser login');
-        // return view('Login.login');
-        return view('auth.register');
+        return view('Login.login');
+        // return view('auth.register');
     }
 
     /**
