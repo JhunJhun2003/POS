@@ -24,8 +24,9 @@ class AdminController extends Controller
         $totalItems = Inventory::sum('quantity');
         $totalUsers = User::count();
         $totalTransactions = SaleReport::count();
+        $lowStockItems = Inventory::where('quantity', '<', 5)->get(['*']);
 
-        return view('index', compact('saleReports', 'totalSales', 'totalItems', 'totalUsers', 'totalTransactions')); // for dashboard
+        return view('index', compact('saleReports', 'totalSales', 'totalItems', 'totalUsers', 'totalTransactions', 'lowStockItems')); // for dashboard
     }
 
     public function item()
@@ -188,6 +189,12 @@ class AdminController extends Controller
 
             // Create bill items
             foreach ($items as $item) {
+                // Check stock
+                $inventory = Inventory::where('itemCode', $item['item_code'])->first(['*']);
+                if (!$inventory || $inventory->quantity < $item['quantity']) {
+                    throw new \Exception("Insufficient stock for item: " . ($inventory ? $inventory->itemName : $item['item_code']));
+                }
+
                 BillItem::create([
                     'bill_id' => $bill->id,
                     'item_id' => $item['item_code'],
@@ -196,8 +203,7 @@ class AdminController extends Controller
                 ]);
 
                 // Update stock
-                Inventory::where('itemCode', $item['item_code'])
-                    ->decrement('quantity', $item['quantity']);
+                $inventory->decrement('quantity', $item['quantity']);
             }
             $salereport = new SaleReport;
             $salereport->sale_date = $bill->bill_date;

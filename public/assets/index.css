@@ -289,3 +289,63 @@
                 width: 240px;
             }
         }
+
+        /* Low Stock Alert Styling */
+        .alert-container {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: #fff5f5;
+            border-left: 6px solid var(--danger);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(180, 71, 68, 0.1);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .alert-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .alert-title {
+            color: var(--danger);
+            font-size: 22px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .alert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .alert-item-card {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(180, 71, 68, 0.1);
+        }
+
+        .alert-item-name {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .alert-item-qty {
+            background: var(--danger);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+        }

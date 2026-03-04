@@ -396,3 +396,23 @@ body {
         width: 100%;
     }
 }
+
+/* Low Stock Styling */
+.low-stock-row {
+    background-color: #fff5f5 !important;
+}
+
+.low-stock-row:hover {
+    background-color: #ffe8e8 !important;
+}
+
+.low-stock-badge {
+    background: #B44744;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-left: 10px;
+    display: inline-block;
+}

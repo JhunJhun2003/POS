@@ -98,6 +98,7 @@
                         </td> --}}
 
                         @foreach ($items as $item)
+<<<<<<< HEAD
                     <tr>
                         <td>{{ $item->itemCode }}</td>
                         <td>{{ $item->itemName }}</td>
@@ -125,6 +126,35 @@
                         </td>
                     </tr>
                     @endforeach
+=======
+                            <tr class="{{ $item->quantity < 5 ? 'low-stock-row' : '' }}">
+                                <td>{{ $item->itemCode }}</td>
+                                <td>
+                                    {{ $item->itemName }}
+                                    @if($item->quantity < 5)
+                                        <span class="low-stock-badge">Low Stock</span>
+                                    @endif
+                                </td>
+                                <td>{{ $item->price }}</td>
+                                <td>{{ $item->quantity }}</td>
+                                <td>{{ $item->cost }}</td>
+                                <td>{{ $item->category ? $item->category->name : 'N/A' }}</td>
+                                <td>{{ $item->exp_Date }}</td>
+                                <td>{{ $item->alert_Date }}</td>
+                                <td class="actions">
+                                    
+                                        <button data-id="{{$item->id}}" data-itemcode = "{{ $item->itemCode }}" data-itemname="{{$item->itemName}}" data-price ="{{ $item->price }}" data-qty = "{{ $item->quantity}}" data-cost = "{{ $item->cost }}" data-category="{{ $item->categoryid}}" data-expdate="{{ $item->exp_Date }}" data-alertdate="{{ $item->alert_Date }}" class="action-link edit-btn">Edit</button>
+                                    <form action="{{route('inventory.delete',$item->id)}}" method="post">
+                                        @csrf 
+                                        @method('DELETE')
+                                        <button type="submit" class="btn-delete" onclick="confirm('Are you sure delete')">Delete</button>
+                                    </form>
+                                    
+                                       
+                                </td>
+                            </tr>   
+                        @endforeach
+>>>>>>> jhun
                     </tr>
                 </tbody>
             </table>

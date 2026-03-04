@@ -393,9 +393,23 @@
                 return;
             }
 
+            // Check stock
+            if (currentItem.stock <= 0) {
+                alert('❌ Item "' + currentItem.item_name + '" is out of stock!');
+                $itemCode.focus();
+                return;
+            }
+
             const quantity = parseInt($quantity.val());
             if (isNaN(quantity) || quantity <= 0) {
                 alert('Please enter a valid quantity');
+                $quantity.focus();
+                return;
+            }
+
+            // Check if requested quantity exceeds stock
+            if (quantity > currentItem.stock) {
+                alert('⚠️ Insufficient stock. Only ' + currentItem.stock + ' units available.');
                 $quantity.focus();
                 return;
             }
