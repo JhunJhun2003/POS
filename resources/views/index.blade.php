@@ -57,6 +57,23 @@
                     <h2 class="content-title">Dashboard Overview</h2>
                 </div>
 
+                @if($lowStockItems->count() > 0)
+                <div class="alert-container">
+                    <div class="alert-header">
+                        <i class="fas fa-exclamation-triangle" style="color: var(--danger); font-size: 24px;"></i>
+                        <h3 class="alert-title">Low Stock Alerts</h3>
+                    </div>
+                    <div class="alert-grid">
+                        @foreach($lowStockItems as $item)
+                        <div class="alert-item-card">
+                            <span class="alert-item-name">{{ $item->itemName }}</span>
+                            <span class="alert-item-qty">{{ $item->quantity }} left</span>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+
                 <!-- Stats Grid -->
                 <div class="stats-grid">
                     <div class="stat-card">

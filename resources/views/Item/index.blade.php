@@ -96,9 +96,14 @@
                         </td> --}}
 
                         @foreach ($items as $item)
-                            <tr>
+                            <tr class="{{ $item->quantity < 5 ? 'low-stock-row' : '' }}">
                                 <td>{{ $item->itemCode }}</td>
-                                <td>{{ $item->itemName }}</td>
+                                <td>
+                                    {{ $item->itemName }}
+                                    @if($item->quantity < 5)
+                                        <span class="low-stock-badge">Low Stock</span>
+                                    @endif
+                                </td>
                                 <td>{{ $item->price }}</td>
                                 <td>{{ $item->quantity }}</td>
                                 <td>{{ $item->cost }}</td>
