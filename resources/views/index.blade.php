@@ -31,8 +31,8 @@
                 <a href="{{ route('admin.user') }}" style="text-decoration: none; color: white;"
                     class="nav-item">Account</a>
                 <a href="{{ route('admin.order') }}" style="text-decoration: none; color: white;" class="nav-item">Order</a>
-                <a href="{{ route('admin.userMenu') }}" style="text-decoration: none; color: white;"
-                    class="nav-item">User Manual</a>
+                {{-- <a href="{{ route('admin.userMenu') }}" style="text-decoration: none; color: white;"
+                    class="nav-item">User Manual</a> --}}
                 <a href="{{ route('admin.report') }}" style="text-decoration: none; color: white;"
                     class="nav-item">Report</a>
                 
